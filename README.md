@@ -51,3 +51,6 @@ def deps do
   ]
 end
 ```
+
+Ways to use this repo:
+If you have a question about a piece of metaprogramming code, search for it to see how used
