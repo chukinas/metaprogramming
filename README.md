@@ -1,56 +1,54 @@
 # Metaprogramming
 
-This project is an introduction to metaprogramming.
+Examples of metaprogramming syntax
+
+# TOC
+
+- quote/2
+    MyFirstMacro.hello/0
+    ./lib/1_my_first_macro.ex
+
+- __using__
+    MyFirstUsing.hello/0
+    ./lib/2_my_first_using.ex
+
+- unquote/1
+    MyFirstUnquote.greet/0
+    ./lib/3_my_first_unquote.ex
+
+- pattern-matching on AST
+    ./lib/opposite_day.ex
+
+- progressive build steps
+    ./lib/progressive_compilation.ex
+
+- Macro.escape
+  generating functions
+   UsState.pa/0
+    ./lib/function_generator.ex
+
+- @external_resource
+   StateAbbreviations.FromExternalResource.pa/0
+   ./lib/state_abbreviations.ex
 
 
 
-## Abstract Syntax Trees (AST)
-
-In LISP, code looks like this:
-```lisp
-> (- (+ 3 4) 7)
-0
-```
-Note the two nested functions. Note that the function name at position 0 and the args that follow.
-This is an Abstract Syntax Tree. Elixir code looks similar when you peek under the hood.
-
-```elixir
-> quote do: 7 - (3 + 4)
-{:-, [context: Elixir, import: Kernel],
- [7, {:+, [context: Elixir, import: Kernel], [3, 4]}]}
-```
-- Note: nested tuples.
-- Function name as atom at position 0.
-- Args as list at position 2.
-- 'Context' at position 1 (You can safely ignore this for now)
-- All ASTs are valid high-level Elixir syntax (tuples, lists, atoms, strings)
-
-KEY TAKEAWAY
-There are two equally valid ways of representing elixir code: 1) High-Level Syntax and 2) AST.
-In any given context, only one of these is valid. e.g. in IEX, only HLS is allowed. e.g. macros (defined using `defmacro`) **always** receive and out put AST.
-
-   - Show LISP syntax - function name first, followed by arguments
-   - This is an AST. You can nest this all the way down.
-   - Elixir, like many/most (all?) other programming languages is represent by this tree structure.
-   - It's just hidden from us, with the nice high-level syntax we're used do.
-   - Your first metaprogramming function: `quote`.
-   - Some simple elixir syntax Quote a number, string, atom
 
 
-Show resources. Pay homage to McCord's Metaprogramming book.
+# Examples outside this repo:
 
-## Installation
+Example of use/2
+   Redline.WebStore.Web
+   ~/monorepo/redline/apps/redline_web_store/web/web.ex
+   ~/monorepo/redline/apps/redline_web_store/web/controllers/account_controller.ex
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `metaprogramming` to your list of dependencies in `mix.exs`:
+Example of dynamically generated function heads
+   (For readability: easier to read a table that a list of maps)
+   ~/projects/dreadnought/apps/suns_core/lib/mission/battlegroup_class.ex
 
-```elixir
-def deps do
-  [
-    {:metaprogramming, "~> 0.1.0"}
-  ]
-end
-```
 
-Ways to use this repo:
-If you have a question about a piece of metaprogramming code, search for it to see how used
+Examgle of watched external resource
+   ~/projects/dreadnought/apps/dreadnought/lib/sprite/importer.ex
+
+Example of Redline Core:
+   ~/monorepo/redline/apps/redline_core_model/lib/core_model/module_attribute.ex
