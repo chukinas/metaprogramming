@@ -51,7 +51,7 @@ defmodule ProgressiveCompilation.Macros do
 
   defmacro register(value) when is_atom(value) do
     quote do
-      if @compile_step == :while_registering, do: @values unquote(value)
+      if @compile_step == :while_registering, do: @values(unquote(value))
     end
   end
 
@@ -60,19 +60,15 @@ defmodule ProgressiveCompilation.Macros do
       if @compile_step == :after_registering && value not in @values do
         raise "`#{value}` is not a registered value!"
       end
+
       def unquote(value)(@compile_step) do
-        Enum.count(@values, & &1 == unquote(value))
+        Enum.count(@values, &(&1 == unquote(value)))
       end
     end
   end
-
 end
 
-
-
-
 defmodule ProgressiveCompilation do
-
   require ProgressiveCompilation.Macros
   import ProgressiveCompilation.Macros
 
@@ -81,21 +77,19 @@ defmodule ProgressiveCompilation do
     # 0
     # $ hello(:after_registering)
     # 1
-    add_counter_function :hello
-    register :bye
+    add_counter_function(:hello)
+    register(:bye)
     # $ bye(:while_registering)
     # 1
     # $ bye(:after_registering)
     # 2
-    add_counter_function :bye
-    register :hello
+    add_counter_function(:bye)
+    register(:hello)
     # Uncomment to see example of compile-time check:
     # add_counter_function :this_will_raise
-    register :bye
+    register(:bye)
   end
-
 end
-
 
 """
 ~/projects/dreadnought/apps/statechart/lib/statechart/machine/builder.ex

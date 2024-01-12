@@ -4,9 +4,9 @@ defmodule UsState do
   """
 
   @type t :: %{
-    :abbrev => String.t,
-    :name => String.t
-  }
+          :abbrev => String.t(),
+          :name => String.t()
+        }
 
   state_abbreviations = """
   AL  Alabama
@@ -23,14 +23,17 @@ defmodule UsState do
     state_abbreviations
     |> String.split("\n")
     |> Enum.map(&String.split(&1, " ", parts: 2, trim: true))
-    |> IO.inspect
+    |> IO.inspect()
 
   for [abbrev, name] <- parsed_states do
-    fun_name = String.downcase(abbrev) |> String.to_atom
-    state = Macro.escape(%{
-      abbrev: abbrev,
-      name: String.trim(name)
-    })
+    fun_name = String.downcase(abbrev) |> String.to_atom()
+
+    state =
+      Macro.escape(%{
+        abbrev: abbrev,
+        name: String.trim(name)
+      })
+
     @spec unquote(fun_name)() :: t
     def unquote(fun_name)(), do: unquote(state)
   end
@@ -56,9 +59,7 @@ defmodule UsState do
   #   Because quote/2 is used for creating ASTs from expressions,
   #   while Macro.escape/2 is about creating ASTs from values.
   #   Here, we had a value (a map) that we wanted.
-
 end
-
 
 """
 __MODULE__.__info__

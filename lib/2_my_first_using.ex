@@ -9,32 +9,15 @@ defmodule MyFirstUsing.Definition do
   defmacro __using__(_opts) do
     quote do
       def hello do
-        IO.puts "hello world"
+        IO.puts("hello world")
       end
     end
   end
-
 end
-
-
-
-
-
-
 
 defmodule MyFirstUsing do
-
   use MyFirstUsing.Definition
-
 end
-
-
-
-
-
-
-
-
 
 """
 ~/monorepo/redline/

@@ -17,11 +17,7 @@ defmodule OppositeDay do
       OppositeDay.Helpers.do_swap(operator, lhs, rhs)
     end
   end
-
 end
-
-
-
 
 """
 ExUnit's assert/1 and assert/2 uses this approach:

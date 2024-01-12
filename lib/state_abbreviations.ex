@@ -20,26 +20,29 @@ defmodule StateAbbreviations.FromExternalResource do
   @external_resource "state_abbreviations.csv"
 
   @type t :: %{
-    :abbrev => String.t,
-    :name => String.t
-  }
+          :abbrev => String.t(),
+          :name => String.t()
+        }
 
   Module.register_attribute(__MODULE__, :state_count, accumulate: true)
 
   parsed_states =
     @external_resource
     |> Path.expand(__DIR__)
-    |> File.stream!
-    |> CSV.decode
-    |> Enum.to_list
+    |> File.stream!()
+    |> CSV.decode()
+    |> Enum.to_list()
 
   for {:ok, [name, _, abbrev]} <- parsed_states do
     @state_count abbrev
-    fun_name = String.downcase(abbrev) |> String.to_atom
-    state = Macro.escape(%{
-      abbrev: abbrev,
-      name: String.trim(name)
-    })
+    fun_name = String.downcase(abbrev) |> String.to_atom()
+
+    state =
+      Macro.escape(%{
+        abbrev: abbrev,
+        name: String.trim(name)
+      })
+
     def unquote(fun_name)(), do: unquote(state)
   end
 
@@ -48,9 +51,7 @@ defmodule StateAbbreviations.FromExternalResource do
   # compiled module but will throw at compile-time if the
   # pattern-match fails (i.e. if we're missing one of more states).
   52 = Enum.count(@state_count)
-
 end
-
 
 """
 This file might have been a good candidate for this approach:

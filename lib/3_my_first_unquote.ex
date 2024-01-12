@@ -9,27 +9,17 @@ defmodule MyFirstUnquote.Definition do
   defmacro insert_greeting(name) do
     quote do
       def greet do
-        IO.puts "Hello, " <> unquote(name)
+        IO.puts("Hello, " <> unquote(name))
       end
     end
   end
-
 end
 
-
-
-
-
-
-
 defmodule MyFirstUnquote do
-
   import MyFirstUnquote.Definition
 
   insert_greeting("Jonathan")
-
 end
-
 
 # unquote is like string interpolation
 # unquote/1 expects a quoted expression

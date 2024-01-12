@@ -9,33 +9,17 @@ defmodule MyFirstMacro.Definition do
   defmacro insert_hello_function do
     quote do
       def hello do
-        IO.puts "hello world"
+        IO.puts("hello world")
       end
     end
   end
-
 end
 
-
-
-
-
-
-
 defmodule MyFirstMacro do
-
   import MyFirstMacro.Definition
 
   insert_hello_function()
-
 end
-
-
-
-
-
-
-
 
 # A macro is a special type of "function":
 #   1) All arguments are AST
